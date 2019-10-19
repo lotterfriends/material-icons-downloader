@@ -1,0 +1,18 @@
+{
+  "name": "material-icons-downloader",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "bin": {
+    "material-icons-downloader": "./index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "André Tarnowsky",
+  "license": "MIT",
+  "dependencies": {
+    "opentype.js": "^1.1.0"
+  }
+}
