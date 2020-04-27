@@ -37,7 +37,7 @@ function showHelp() {
     console.log('');
     console.log('-h/--help    show this help');
     console.log('-f/--force   force download and ignore the version');
-    console.log('-q/--quite   no output');
+    console.log('-q/--quiet   no output');
     console.log('');
     process.exit(1);
 }

@@ -34,7 +34,7 @@ Add the download script to your package.json, the paramater is the target folder
 ```bash
 -h/--help    show this help
 -f/--force   force download and ignore the version
--q/--quite   no output
+-q/--quiet   no output
 ```
 
 ## Style
