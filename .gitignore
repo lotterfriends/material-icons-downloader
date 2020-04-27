@@ -59,3 +59,25 @@ typings/
 
 # next.js build output
 .next
+target/font.css
+target/material-outline.eot
+target/material-outline.otf
+target/material-outline.woff
+target/material-outline.woff2
+target/material-regular.eot
+target/material-regular.ttf
+target/material-regular.woff
+target/material-regular.woff2
+target/material-round.eot
+target/material-round.otf
+target/material-round.woff
+target/material-round.woff2
+target/material-sharp.eot
+target/material-sharp.otf
+target/material-sharp.woff
+target/material-sharp.woff2
+target/material-twotone.eot
+target/material-twotone.otf
+target/material-twotone.woff
+target/material-twotone.woff2
+target/version.json

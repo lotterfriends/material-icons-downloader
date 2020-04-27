@@ -4,26 +4,18 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const opentype = require('opentype.js');
-
 const namePrefix = "material-";
+const args = process.argv.slice(2);
+const isQuiet = args.length && args.indexOf('-q') > -1 || args.indexOf('--quiet') > -1;
+const isForce = args.length && args.indexOf('-f') > -1 || args.indexOf('--force') > -1;
+const isShowHelp = args.length && args.indexOf('-h') > -1 || args.indexOf('--help') > -1;
 
 const uaWoff = "Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.3) Gecko/20100401 Firefox/3.6.3";
 const uaWoff2 = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36";
 const uaEot = "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0; Trident/4.0)";
 
 const baseUrl = "http://fonts.googleapis.com/icon?family=Material+Icons";
-let targetFolder;
-
-if(process.argv.length > 2 && typeof process.argv[2] !== 'undefined') {
-
-    targetFolder = path.join(process.cwd(), process.argv[2]);
-    if (!fs.existsSync(targetFolder)) {
-        fs.mkdirSync(targetFolder)
-    }
-} else {
-    console.log('no target folder');
-    process.exit(1);
-}
+const targetFolderParamater = args.find(e => e !== '-q' && e !== '--quiet' && e !== '-f' && e !== '--force' && e !== '-h' && e !== '--help');
 
 const fontTypes = [
     {type: 'ttf', ua: false},
@@ -32,6 +24,27 @@ const fontTypes = [
     {type: 'woff', ua: uaWoff},
     {type: 'woff2', ua: uaWoff2},
 ] 
+
+let targetFolder;
+
+function showHelp() {
+    console.log('');
+    console.log('Download current material-design-icons, because Google don\'t update there Repository.');
+    console.log('See: https://github.com/google/material-design-icons/issues/786');
+    console.log('');
+    console.log('Usage:');
+    console.log('material-icons-downloader [OPTION] <TARGET FOLDER>');
+    console.log('');
+    console.log('-h/--help    show this help');
+    console.log('-f/--force   force download and ignore the version');
+    console.log('-q/--quite   no output');
+    console.log('');
+    process.exit(1);
+}
+
+function parseVersion() {
+    parseFloat(x.match(/[0-9.,]+$/)[0]) < 1.001
+}
 
 function getFontInfos(url, type, userAgent, callback) {
     let options = {};
@@ -91,8 +104,74 @@ function getFonts(type, name, variant) {
 }
 
 
-getFonts('ttf', namePrefix + 'regular');
-getFonts('otf', namePrefix + 'outline', 'Outlined');
-getFonts('otf', namePrefix + 'round', 'Round');
-getFonts('otf', namePrefix + 'twotone', 'Two+Tone');
-getFonts('otf', namePrefix + 'sharp', 'Sharp');
+async function checkVersion() {
+    let versionFile;
+    try {
+        versionFile = require(path.join(targetFolder, 'version.json'))
+    } catch (error) { }
+    
+    return new Promise((resolve) => {
+        if (versionFile) {
+            getFontInfos(baseUrl, 'ttf', false, (url) => {
+                const filePath = path.join(__dirname, 'tmp.ttf');
+                const file = fs.createWriteStream(filePath);
+                http.get(url, async function(response) {
+                    const stream = response.pipe(file);
+                    stream.on('finish', function () {
+                        var font = opentype.loadSync(filePath);
+                        if (!isQuiet) {
+                            console.log('Version: ', font.names.version.en);
+                            console.log('ID:      ', font.names.uniqueID.en);
+                        }
+                        fs.unlinkSync(filePath);
+                        if (versionFile.version === font.names.version.en && versionFile.uniqueID === font.names.uniqueID.en) {
+                            if (!isQuiet) {
+                                console.log('The local version is already up-to-date.')
+                            }
+                            if (!isForce) {
+                                process.exit(0)
+                            }
+                        }
+                        resolve();
+                    });
+                });
+            });
+        } else {
+            resolve();
+        }
+    });
+}
+
+function generateCSS() {
+    const cssTplBuffer = fs.readFileSync(path.join(__dirname, 'fonts.tpl.css'));
+    const cssFileContent = cssTplBuffer.toString().replace(/##PATH-TO-ICONS##/gm, targetFolderParamater);
+    fs.writeFileSync(path.join(targetFolder, 'font.css'), cssFileContent);
+}
+
+async function run() {
+
+    if (isShowHelp) {
+        showHelp();
+        process.exit(0);
+    }
+
+    if (typeof targetFolderParamater !== 'undefined') {
+        targetFolder = path.join(process.cwd(), targetFolderParamater);
+        if (!fs.existsSync(targetFolder)) {
+            fs.mkdirSync(targetFolder)
+        }
+    } else {
+        console.log('ERROR: no target folder.');
+        process.exit(1);
+    }
+    
+    await checkVersion();
+    getFonts('ttf', namePrefix + 'regular');
+    getFonts('otf', namePrefix + 'outline', 'Outlined');
+    getFonts('otf', namePrefix + 'round', 'Round');
+    getFonts('otf', namePrefix + 'twotone', 'Two+Tone');
+    getFonts('otf', namePrefix + 'sharp', 'Sharp');
+    generateCSS();
+}
+
+run();
