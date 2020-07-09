@@ -1,6 +1,6 @@
 {
   "name": "material-icons-downloader",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "",
   "main": "index.js",
   "bin": {
@@ -14,5 +14,6 @@
   "license": "MIT",
   "dependencies": {
     "opentype.js": "^1.1.0"
-  }
+  },
+  "buildTimestamp": 1594289739893
 }

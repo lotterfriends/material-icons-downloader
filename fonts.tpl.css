@@ -3,7 +3,7 @@
  * fonts for material icons
  */
 
-@font-face {
+ @font-face {
   font-family: "Material Icons";
   font-style: normal;
   font-weight: 400;
@@ -70,6 +70,17 @@
     url("##PATH-TO-ICONS##/material-sharp.woff2") format("woff2"),
     url("##PATH-TO-ICONS##/material-sharp.woff") format("woff"),
     url("##PATH-TO-ICONS##/material-sharp.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Material Icons Two Tone";
+  font-style: normal;
+  font-weight: 400;
+  src: url("##PATH-TO-ICONS##/material-twotone.eot"); /* For IE6-8 */
+  src: local("Material Icons twotone"),
+    url("##PATH-TO-ICONS##/material-twotone.woff2") format("woff2"),
+    url("##PATH-TO-ICONS##/material-twotone.woff") format("woff"),
+    url("##PATH-TO-ICONS##/material-twotone.otf") format("opentype");
 }
 
 .material-icons-outlined,
