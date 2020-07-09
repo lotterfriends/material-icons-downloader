@@ -1,0 +1,6 @@
+{
+  "commitURL": "https://github.com/lotterfriends/git-flow-buddy/commit",
+  "releaseURL": "https://github.com/lotterfriends/git-flow-buddy/releases/tag",
+  "buildTimestampInName": false,
+  "postReleaseCommands": ["npm publish"]
+}
