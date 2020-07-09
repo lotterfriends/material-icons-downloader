@@ -37,6 +37,35 @@ Add the download script to your package.json, the paramater is the target folder
 -q/--quiet   no output
 ```
 
+## Usage
+
+### Normal version
+```html
+<mat-icon>file_copy</mat-icon>
+```
+### Normal version with color
+```html
+<mat-icon color="warn">file_copy</mat-icon>
+```
+### Outline version
+```html
+<mat-icon fontSet="material-icons-outlined">file_copy</mat-icon>
+```
+### Two tone version
+```html
+<mat-icon fontSet="material-icons-two-tone">file_copy</mat-icon>
+```
+
+### Round version
+```html
+<mat-icon fontSet="material-icons-round">file_copy</mat-icon>
+```
+
+### Sharp version
+```html
+<mat-icon fontSet="material-icons-sharp">file_copy</mat-icon>
+```
+
 ## Style
 Add the Styles and replace `##PATH-TO-ICONS##` with the Path defined as parameter in `package.json`. You can also use the generated font.css file.
 
@@ -114,6 +143,18 @@ Add the Styles and replace `##PATH-TO-ICONS##` with the Path defined as paramete
     url("##PATH-TO-ICONS##/material-sharp.woff") format("woff"),
     url("##PATH-TO-ICONS##/material-sharp.otf") format("opentype");
 }
+
+@font-face {
+  font-family: "Material Icons Two Tone";
+  font-style: normal;
+  font-weight: 400;
+  src: url("##PATH-TO-ICONS##/material-twotone.eot"); /* For IE6-8 */
+  src: local("Material Icons twotone"),
+    url("##PATH-TO-ICONS##/material-twotone.woff2") format("woff2"),
+    url("##PATH-TO-ICONS##/material-twotone.woff") format("woff"),
+    url("##PATH-TO-ICONS##/material-twotone.otf") format("opentype");
+}
+
 
 .material-icons-outlined,
 .material-icons.material-icons--outlined,
