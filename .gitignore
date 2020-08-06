@@ -59,7 +59,8 @@ typings/
 
 # next.js build output
 .next
-target/font.css
+target/mat-icon-font.css
+target/mat-icon-font.scss
 target/material-outline.eot
 target/material-outline.otf
 target/material-outline.woff
