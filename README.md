@@ -22,7 +22,8 @@ Add the download script to your package.json, the paramater is the target folder
   "description": "",
   ...
   "scripts": {
-    "dl-icons": "material-icons-downloader src/assets/fonts/material-iconfont",
+    "dl-icons": "material-icons-downloader --scss --force src/assets/fonts/material-iconfont",
+    "postdl-icons": "cp -u src/assets/fonts/material-iconfont/mat-icon-font.scss src/scss/mat-icon-font.scss"
   },
   "keywords": [],
   ...
@@ -35,6 +36,7 @@ Add the download script to your package.json, the paramater is the target folder
 -h/--help    show this help
 -f/--force   force download and ignore the version
 -q/--quiet   no output
+-s/--scss    create a scss file instead of css file
 ```
 
 ## Usage
@@ -67,7 +69,7 @@ Add the download script to your package.json, the paramater is the target folder
 ```
 
 ## Style
-Add the Styles and replace `##PATH-TO-ICONS##` with the Path defined as parameter in `package.json`. You can also use the generated font.css file.
+Add the Styles and replace `##PATH-TO-ICONS##` with the Path defined as parameter in `package.json`. You can also use the generated `mat-icon-font.css` or `mat-icon-font.scss` file.
 
 ```css
 
