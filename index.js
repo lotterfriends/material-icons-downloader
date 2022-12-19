@@ -40,7 +40,7 @@ function showHelp() {
     console.log('-h/--help    show this help');
     console.log('-f/--force   force download and ignore the version');
     console.log('-q/--quiet   no output');
-    console.log('-s/--scss    no output');
+    console.log('-s/--scss    generate scss instead of css');
     console.log('');
     process.exit(1);
 }
